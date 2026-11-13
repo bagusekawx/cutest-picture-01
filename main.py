@@ -1,15 +1,16 @@
-# cutest-picture-01 entry, v2.0: "Kitten & Bunny" (kitten-bunny).
-# Cream kitten in a daisy crown and mint scarf hugging a sleeping bunny.
-# Copies the picture to /output/entry.png. Deterministic: byte copy, no
-# network, no randomness — identical output on every run.
-from os import makedirs, path
-from os import environ
-from shutil import copyfile
+# cutest-picture-01, v3.0: "The Bunny's First Friend" — the v1 image,
+# restored as the final entry after v2 rated below it (90.39% vs 90.91%).
+# A fluffy white baby bunny hugging a tiny sleeping yellow chick.
+# Writes the picture to /output/entry.png as a plain byte copy:
+# deterministic, no network, no randomness, same bytes on every run.
+import os
+import shutil
+from pathlib import Path
 
-HERE = path.dirname(path.abspath(__file__))
-SOURCE = path.join(HERE, "art.jpg")
-OUTDIR = environ.get("MAKEFUN_OUTPUT_DIR", "/output")
-DEST = path.join(OUTDIR, "entry.png")
+ROOT = Path(__file__).resolve().parent
+PICTURE = ROOT / "art.jpg"
+OUT_DIR = Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))
+OUT_FILE = OUT_DIR / "entry.png"
 
-makedirs(path.dirname(DEST), exist_ok=True)
-copyfile(SOURCE, DEST)
+OUT_DIR.mkdir(parents=True, exist_ok=True)
+shutil.copyfile(PICTURE, OUT_FILE)
